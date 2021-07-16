@@ -1,0 +1,59 @@
+img{
+   height: 300px;
+   width: 300px;
+   
+}
+
+.image-wrapper{
+   display: inline-block;
+   overflow: hidden;
+}
+img:hover{
+   animation: grow 3s ease-out;
+   
+}
+
+
+@keyframes grow{ 
+   100%{
+      transform: scale(1.3);
+   }
+}
+
+
+.mood-section{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: space-between;
+
+}
+.mood-section div{
+   width: 45%;
+   border: 2px solid red;
+}
+.recommendation-section{
+   border: 2px solid red;
+   text-align: center;
+   width: 60%;
+   margin: auto;
+}
+
+.songs-list{
+   
+   list-style: none;
+}
+.songs-list img{
+   display: inline-block;
+   height: 64px;
+   width: 64px;
+}
+
+.content{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   
+}
+
