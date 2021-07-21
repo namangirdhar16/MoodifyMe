@@ -36,6 +36,9 @@ app.get("/app", (req, res) => {
 app.get("/callback", (req, res) => {
   res.sendFile("./callback.html", {root: publicPath});
 })
+app.get("/visualizer", (req, res) => {
+  res.sendFile("./visualiser.html", {root: publicPath});
+})
 app.get("/newPage", (req, res) => {
     
   res.sendFile("./newPage.html", {root: publicPath});

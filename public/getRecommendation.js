@@ -260,6 +260,7 @@ $savePlaylistButton.addEventListener("click", () => {
     {
         saveAsPlaylist();
         first = false;
+        alert("Playlist Saved!");
     }
     else
     alert("There is an error please try again!");
@@ -270,7 +271,7 @@ const saveAsPlaylist = () => {
         type: 'POST',
         url: 'https://api.spotify.com/v1/users/' + encodeURIComponent(user.id) + '/playlists',
         data: JSON.stringify({
-            "name": "2 playlist demo", 
+            "name": "Moodify playlist demo", 
             "description": "demo playlist",
   
          }),
@@ -281,8 +282,8 @@ const saveAsPlaylist = () => {
         success: function(result) {
           console.log('Woo! :)');
           console.log(result);
-         
-         addHappyTracks(result);
+          console.log(arrangeAndModifyURI());
+          addAllTracks(result);
           
         },
         error: function() {
@@ -291,42 +292,35 @@ const saveAsPlaylist = () => {
       })
 }
 
-
-// const addHappyTracks = (playlist) => {
-
-//     $.ajax({
-//         type: 'POST',
-//         url: 'https://api.spotify.com/v1/playlists/' + encodeURIComponent(playlist.id) + '/tracks?uris=' + happyURI,
-//         headers: {
-//           'Authorization': 'Bearer ' + access_token,
-//           'Content-Type': 'application/json'
-//         },
-//         success: function(result) {
-//           console.log('Woo! :)');
-//           //showSnackbar();
-//         },
-//         error: function() {
-//           console.log('Error! :(');
-//         }
-//       })
-  
-// }
-
-var id = '1fZSEDgHomhPmiDk1cyV2n';
-function addHappyTracks(playlist){
+const arrangeAndModifyURI = () => {
+    
+    var res = "";
+    for(let i = 0; i < inOrder.length; i++)
+    {   
+        for(let j = 0; j < inOrder[i][0].length; j++)
+        {
+            res += "spotify:track:";
+            res += inOrder[i][0][j].id;
+            res += ",";
+        }
+        
+    }
+    return res;
+}
+const addAllTracks = (playlist) => {
     $.ajax({
         type: 'POST',
-        url: 'https://api.spotify.com/v1/playlists/' + encodeURIComponent(playlist.id) + '/tracks?uris=spotify:track:' + id ,
+        url: 'https://api.spotify.com/v1/playlists/' + encodeURIComponent(playlist.id) + '/tracks?uris=' + arrangeAndModifyURI(),
         headers: {
           'Authorization': 'Bearer ' + access_token,
           'Content-Type': 'application/json'
         },
-        success: function(result) {
-          console.log('Woo! :)');
-          //showSnackbar();
+        success: (result) => {
+          console.log('yess');
+         
         },
-        error: function() {
-          console.log('Error! :(');
+        error: () => {  
+          console.log('Error!');
         }
       })
 }
