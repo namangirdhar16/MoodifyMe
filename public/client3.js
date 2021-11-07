@@ -6,6 +6,8 @@ const imgWrapper = document.querySelector(".image-section");
 if(!userImage)
 {
     image.setAttribute("src", "placeholder.jpg");
+    // image.setAttribue("height", "300px");
+    // image.setAttribute("width", "300px");
     imgWrapper.append(image);
 }
 else{
@@ -16,7 +18,7 @@ else{
     image.setAttribute("width", "300px");
    // body.append(image);
     imgWrapper.append(image);
-    localStorage.removeItem("userImage");
+    //localStorage.removeItem("userImage");
 }
 
 // Promise.all([

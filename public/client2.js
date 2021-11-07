@@ -9,36 +9,52 @@ const body = document.querySelector("body");
 const $onOff = document.querySelector(".onbutton");
 const $detectmyface = document.querySelector(".detectmyface");
 const $capture = document.querySelector(".capture");
-const $fileToUpload = document.querySelector(".fileToUpload");
+// const $fileToUpload = document.querySelector(".fileToUpload");
 const $go = document.querySelector(".go");
-const $uploadbutton = document.querySelector(".uploadbutton");
-const $form = document.querySelector("#form");
+// const $uploadbutton = document.querySelector(".uploadbutton");
+// const $form = document.querySelector("#form");
 
 var firstTime = true;
 
-$form.addEventListener("submit", (e) => {
-  e.preventDefault();
-})
-$uploadbutton.addEventListener("click", (e) => {
-  const files = e.target.$fileToUpload;
-
-  console.log(files);
-})
-var yes = false;
-$go.addEventListener("click", () => {
+window.addEventListener("load", () => {
   if(sessionStorage.getItem("login"))
+  {
+    $go.innerHTML = "Recommend Songs";
+  }
+  else
+  $go.innerHTML = "Get Mood Report";
+
+  
+})
+// $form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+// })
+// $uploadbutton.addEventListener("click", (e) => {
+//   const files = e.target.$fileToUpload;
+
+//   console.log(files);
+// })
+var yes = false;
+
+
+$go.addEventListener("click", () => {
+  if(sessionStorage.getItem("login") && yes)
   location.href = "/detection";
-  // else if(yes == false)
-  // alert("To Move ahead you need to get your face detected first!");
+  else if(yes)
+  {
+    location.href = "/moodReport";
+  }
   else 
   {
-    alert("To Move ahead You need to login first !");
+    alert("Your face is not detected yet!");
   }
   
 })
 
 $onOff.addEventListener("click", () => {
-   
+  
+  captured = (captured) ? false : true;
+
   if(video.paused)
   {
     video.play();
@@ -53,7 +69,7 @@ $onOff.addEventListener("click", () => {
    
     
 })
-
+var capture = false;
 $capture.addEventListener("click", () => {
    
   var canva = document.createElement("canvas");
@@ -71,6 +87,7 @@ $capture.addEventListener("click", () => {
     video.poster = dataURL;
     video.pause();
     localStorage.setItem("userImage", dataURL);
+    captured = true;
    // dataURL = null;
   }
   
@@ -128,9 +145,9 @@ const main = () => {
     if(detectionOn)
     { 
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-     // faceapi.draw.drawDetections(canvas, resizedDetections);
+      faceapi.draw.drawDetections(canvas, resizedDetections);
       faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-      faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+      //faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
     }
     else{
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);

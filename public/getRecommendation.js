@@ -34,7 +34,7 @@ window.addEventListener("load", () => {
 const main = () => {
 
      $.ajax({
-        url: 'https://api.spotify.com/v1/me/top/tracks?limit=100&time_range=medium_term',
+        url: 'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term',
         headers: {
             'Authorization': 'Bearer ' + access_token
         },
@@ -108,7 +108,6 @@ const assignMoodsFeature  = (allTracks) => {
            
     
 }
-
 const categorizeTracks = () => {
     
     for(let i = 0; i < allTracks.length; i++)
@@ -228,6 +227,7 @@ const setSongsList = (inOrder) => {
             child.innerHTML = `${curr[i].name}`;
             const imgElement = document.createElement("img");
             imgElement.setAttribute("src", curr[i].image.url);
+            imgElement.classList.add("list-group");
             child.appendChild(imgElement);
             $reccList.append(child);
         }
@@ -271,9 +271,9 @@ const saveAsPlaylist = () => {
         type: 'POST',
         url: 'https://api.spotify.com/v1/users/' + encodeURIComponent(user.id) + '/playlists',
         data: JSON.stringify({
-            "name": "Moodify playlist demo", 
-            "description": "demo playlist",
-  
+            "name": todaysInfo(), 
+            "description": "This is a playlist created by MOODIFY ME based on your moods, dominating moods on the top followed by minor ones",
+
          }),
         headers: {
           'Authorization': 'Bearer ' + access_token,
@@ -323,4 +323,11 @@ const addAllTracks = (playlist) => {
           console.log('Error!');
         }
       })
+}
+
+const date = () => {
+    return new Date();
+}
+const todaysInfo = () => {   
+    return `Playlist by MOODIFY ME, Created on ${date()} at`
 }
